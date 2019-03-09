@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+.jumbotron {
+    margin-top: 400px;
+}
+.jumbotron
+{
+margin-bottom: 0px !important;
+}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">{% for product in products %}
+          {{product.id}}
+          {% for picture in product.productsimage_set.all %}
+          <img src="media/{{picture.image}}">
+          {% endfor %}
+          {% endfor %}</h1>
+      <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+    </div>
+  </div
+  
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+{% block head_title %}{% endblock %}
+{% block content %}
+
+{% block jquery %}
+alert("Welcome");
+{% endblock %}
+
+{% block jumbotron2 %}
+<div class="container">
+
+<div class="jumbotron">
+        <h1>Navbar example</h1>
+        <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
+        <a class="btn btn-lg btn-primary" href="https://getbootstrap.com/docs/4.3/components/navbar/" role="button">View navbar docs »</a>
+      </div>
+</div>
+{% endblock %}
+
+
+<div class="row">
+        
+   {% for item in items %}
+   <div class="col-sm-4">
+      {{ item.id }}
+     {{ item.title }}
+     
+
+   <span class="badge badge-secondary text-white">{{ item.price }}</span> 
+    
+  {{item.featured}}
+  {% for picture in item.productsimage_set.all %}
+  {{picture.image}}
+  <img src="media/{{picture.image}}" />
+
+
+{% endfor %}
+</div>
+   {% endfor %}
+
+</div>
+
+{% endblock %}
