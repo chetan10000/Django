@@ -1,0 +1,47 @@
+<div class="row">
+{% for item in Books %}
+<div class="col-sm-4">
+  <div class="container">
+<div class="clearfix">
+    <img src="{{item.image}}" alt="image about books" class="rounded"  style="height:190px;width:160px;float:left;">
+    <blockquote class="blockquote">
+        <p class="m">{{item.title}}</p>
+        <footer class="blockquote-footer">by <cite>{{item.author.first_name}} {{item.author.last_name}}</cite></footer>
+    </blockquote>
+  </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+
+===================
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Save" />
+</form>
+{% endblock %}
+========================================
+ 
+</button><button type="button" class="btn btn-outline-success and-all-other-classes"> 
+  <a href="{% url 'remove' pk=object.id %}" style="color:inherit"> Delete </a>
+</button>
+
+===================================
+
+{% extends 'base.html' %}//
+
+{% block content %}
+  //<form method="post"  enctype="multipart/form-data">//
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <table>{{ formset.as_table }}</table>
+   
+    <button type="submit" value="Save"/>
+  </form>
+  {{form}}
+  
+{% endblock %}

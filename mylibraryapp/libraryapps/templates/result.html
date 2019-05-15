@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block head_title %}{% endblock %}
+{% block content %}
+
+{% block jquery %}
+
+{% endblock %}
+
+
+
+
+
+<div class="row">
+        
+   {% for Book in Books %}
+   <div class="col-sm-4">
+      <div class="container">
+          <div class="page-header">
+            <p class="text-center"><h4> {{item.title}} </h4> </p>  
+          </div>
+          </div>
+      {{ Book.id }}
+     
+         
+  {{Book.featured}}
+<img src="{{Book.image}}"  class="img-thumbnail" style="height:190px;width:160px;"/>
+
+  
+<span class="badge badge-secondary text-white" style="vertical-align: top;">-By {{ Book.author.first_name }} {{ Book.author.last_name }}</span> 
+{% for name in item.genre%}
+<h2 style="font-size: 14px;font-style: italic;">Category :{{name.name}}</h2>
+{% endfor%}
+<p class="mb-0" style="line-height: 1.4em;font-style: italic;">{{Book.description}}</p>
+<button type="button" class="btn btn-outline-success and-all-other-classes"> 
+   <a href="{% url 'detail' Book.id %}" style="color:inherit"> Details </a></button>
+   <button type="button" class="btn btn-outline-success and-all-other-classes"> 
+   <a href="{% url 'remove' Book.id %}" style="color:inherit"> Remove </a></button>
+   <button type="button" class="btn btn-outline-success and-all-other-classes"> 
+   <a href="{% url 'edit' Book.id %}" style="color:inherit"> Edit </a></button> 
+
+</div>
+   {% endfor %}
+
+</div>
+
+
+{% endblock %}

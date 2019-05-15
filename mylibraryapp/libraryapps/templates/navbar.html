@@ -1,0 +1,31 @@
+<html>
+  
+<body>
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark">
+    <a class="navbar-brand" href="{% url 'books' %}" style ="color:#42f465;">Books</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item active">
+            <button type="button" class="btn btn-outline-success and-all-other-classes"> 
+                <a href="{% url 'create' %}" style="color:inherit"> Add Book </a>
+              </button>
+          </li>
+          
+        
+      </ul>
+      <form class="navbar-form navbar-left" role="search" action="{% url 'search' %}">
+        <div class="form-group">
+            <input  type="text" class="form-control" name='q' placeholder="Search Books by category or by author name" >
+        </div>
+        <button type="submit" class="btn btn-outline-success and-all-other-classes">Search</button>
+      </form>
+    </div>
+  </nav>
+  
+</body>
+</html>

@@ -1,0 +1,21 @@
+
+<h1>Hello World!!</h1>
+<div class="container">
+        <ul class="wrap-item-li">
+                {% for Book in Books %}
+            
+                
+                <li class="list-item-li">
+
+                <div class="item-left"><img src="{{Book.image}}"></div>
+                
+<div class="item-right"> 
+    <h2 class="item-title">{{Book.title}}</h2></div>
+</div>
+</li>
+{% endfor %}
+</ul>
+
+
+        
+

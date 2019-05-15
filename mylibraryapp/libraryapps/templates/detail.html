@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+        
+ 
+    
+    <div class="col-sm-4">
+       <div class="container">
+           
+           <div class="page-header">
+             <p class="text-center"><h4> {{Books.title}} </h4> </p>  
+           </div>
+           </div>
+       {{ Books.id }}
+      
+          
+   {{item.featured}}
+ <img src="{{Books.image}}"  class="img-thumbnail" style="height:190px;width:160px;"/>
+ 
+   
+ <span class="badge badge-secondary text-white" style="vertical-align: top;">-By {{ Books.author.first_name }} {{ Books.author.last_name }}</span> 
+ {% for name in Books.genre%}
+ <span style="vertical-align:top;"><h2 style="font-size: 14px;font-style: italic;">Category :{{name.name}}</h2>
+ {% endfor%}
+ 
+ <p class="mb-0" style="line-height: 1.4em;font-style: italic;text-align:justify;">{{Books.description}}</p></span>
+ 
+   
+
+ 
+ </div>
+    
+ 
+   
+ </div>
+
+ 
+ {% endblock %}
