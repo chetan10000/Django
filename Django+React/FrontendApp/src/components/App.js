@@ -66,8 +66,8 @@ import { render } from "react-dom";
       })
     }
 
-    handleDelete(){
-      fetch("http://127.0.0.1:8000/api/status/All/?" + new URLSearchParams({q:8}),
+    handleDelete(id){
+      fetch("http://127.0.0.1:8000/api/status/All/?" + new URLSearchParams({'id':id}),
       {method:'DELETE', 
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify()})
@@ -78,6 +78,11 @@ import { render } from "react-dom";
       .catch((error)=>{
         console.log("error",error);
       })
+    }
+    handleMe = (item)=>{
+      const itemsStatus = this.state.items.filter(c => c.id !== item.id);
+      this.handleDelete(item.id);
+      this.setState({items:itemsStatus});
     }
  
   
@@ -94,8 +99,9 @@ import { render } from "react-dom";
         return (
           <React.Fragment>
           <button onClick={this.state.handlePost}>Create Me</button>
-          <button onClick={this.state.handleUpdate}>Update Me</button>
+         
           <button onClick={this.state.handleDelete}>Delete Me</button>
+          
           
          <ul>{this.state.items.map((item) =>
          <div className="card mb-3" style={{width:450}}>
@@ -110,6 +116,8 @@ import { render } from "react-dom";
         <h5 className="card-title">{item.user}</h5>
         <p className="card-text">{item.text}</p>
         <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+          <button onClick={this.handleMe(item)}>Me</button>
+ <button onClick={this.state.handleUpdate}>Update Me</button>
       </div>
       </div>
 
