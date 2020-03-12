@@ -39,19 +39,23 @@ import { render } from "react-dom";
     }
  
     handlePost(){
+      let fd = new FormData();
+      fd.append('user',1);
+      fd.append('text',this.state.value);
+      fd.append('image',this.state.file);
+
+      
       fetch("http://127.0.0.1:8000/api/status/All/",
       {method:'POST', 
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({user:1,"text":"hello"})})
+      body:fd})
       .then(res=>res.json())
       .then((result)=>{
-        console.log("Success");
+       this.setState({items:[...this.state.items,result]});
       })
       .catch((error)=>{
         console.log("error",error);
       })
     }
-
     handleUpdate(){
       fetch("http://127.0.0.1:8000/api/status/All/",
       {method:'PUT', 
