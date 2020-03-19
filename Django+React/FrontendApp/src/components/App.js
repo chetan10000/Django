@@ -18,8 +18,8 @@ import './App.css';
         items: [],
         value:'',
         file:null,
-        username:'chetan',
-        password:'chetan1990',
+        username:'************',
+        password:'********',
         show:false,
         
       };
