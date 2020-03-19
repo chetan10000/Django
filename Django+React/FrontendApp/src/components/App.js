@@ -1,21 +1,38 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import Crud from './Crud';
+import {Base64} from 'base64-js';
+import MyModal from './Modal';
+import './App.css';
+
 
 
 
 
   class App extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
+    constructor(props){
+    super(props);
+    this.state = {
         error: null,
         isLoaded: false,
         items: [],
-        handlePost:this.handlePost.bind(this),
-        handleUpdate:this.handleUpdate.bind(this),
-        handleDelete:this.handleDelete.bind(this),
+        value:'',
+        file:null,
+        username:'chetan',
+        password:'chetan1990',
+        show:false,
+        
       };
+      this.handlePost= this.handlePost.bind(this);
+    
     }
+    
+    handleClose = ()=>{
+      this.setState({show:false});
+  }
+  handleShow = ()=>{
+      this.setState({show:true});
+  }
   
     componentDidMount() {
       fetch("http://127.0.0.1:8000/api/status/All/")
@@ -28,7 +45,9 @@ import { render } from "react-dom";
               items: result
             });
           },
-       
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
           (error) => {
             this.setState({
               isLoaded: true,
@@ -37,25 +56,24 @@ import { render } from "react-dom";
           }
         )
     }
- 
+  
     handlePost(){
       let fd = new FormData();
       fd.append('user',1);
       fd.append('text',this.state.value);
       fd.append('image',this.state.file);
-
-      
-      fetch("http://127.0.0.1:8000/api/status/All/",
+    fetch("http://127.0.0.1:8000/api/status/All/",
       {method:'POST', 
       body:fd})
       .then(res=>res.json())
       .then((result)=>{
-       this.setState({items:[...this.state.items,result]});
+      this.setState({items:[...this.state.items,result]});
       })
       .catch((error)=>{
         console.log("error",error);
       })
     }
+
     handleUpdate(){
       fetch("http://127.0.0.1:8000/api/status/All/",
       {method:'PUT', 
@@ -71,6 +89,7 @@ import { render } from "react-dom";
     }
 
     handleDelete(id){
+    
       fetch("http://127.0.0.1:8000/api/status/All/?" + new URLSearchParams({'id':id}),
       {method:'DELETE', 
       headers:{'Content-Type':'application/json'},
@@ -83,58 +102,99 @@ import { render } from "react-dom";
         console.log("error",error);
       })
     }
-    handleMe = (item)=>{
-      const itemsStatus = this.state.items.filter(c => c.id !== item.id);
-      this.handleDelete(item.id);
-      this.setState({items:itemsStatus});
-    }
  
-  
-    render() {
-      const { error, isLoaded, items } = this.state;
-      const listItems = 
-    console.log(listItems);
+    
+    handleMe = (item)=>{
+      
+      console.log('hello me' );
+      const itemsStatus= this.state.items.filter(c => c.id !== item.id);
+      this.handleDelete(item.id)
+      this.setState({ items:itemsStatus});
+    
+
+    }
+
+    handleSubmit = (event)=>{
      
+      alert('this is value : ' + this.state.value + this.state.file);
+      event.preventDefault();
+      this.handlePost();
+      this.setState({value:'',file:'No File Choosen'})
+     
+    }
+
+    handleChange= (event)=>{
+      this.setState({value:event.target.value});
+
+      
+    }
+
+handleFiles  = (event)=>{
+  
+  
+  //let file = Array.from(files).forEach(file => this.setState({file:file})
+ // );
+this.setState({file:event.target.files[0]});
+
+
+}
+handleIndex = (item)=>{
+  
+  console.log(this.state.items.indexOf(item));
+}
+handleContent = (item)=>{
+  const item1 = this.state.items.indexOf(item);
+  
+ 
+}
+
+handleText = (event) =>{
+  console.log("Hello world" + event.target.value);
+}
+    render() {
+     
+      const { error, isLoaded, items } = this.state;
       if (error) {
         return <div>Error: {error.message}</div>;
-      } else if (!isLoaded) {
+      }
+     else if (!isLoaded) {
         return <div>Loading...</div>;
       } else {
         return (
-          <React.Fragment>
-          <button onClick={this.state.handlePost}>Create Me</button>
-         
-          <button onClick={this.state.handleDelete}>Delete Me</button>
-          
-          
-         <ul>{this.state.items.map((item) =>
-         <div className="card mb-3" style={{width:450}}>
-          <div class="row no-gutters">
-         <div className="col-md-4">
-         <li><img src={item.image} style={{width:150,height:150}} className="card-img" alt={item.user}/>
-      
-      </li>
-      </div>
-      <div className="col-md-8">
-      <div className="card-body">
-        <h5 className="card-title">{item.user}</h5>
-        <p className="card-text">{item.text}</p>
-        <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-          <button onClick={this.handleMe(item)}>Me</button>
- <button onClick={this.state.handleUpdate}>Update Me</button>
-      </div>
-      </div>
+<React.Fragment >
 
-         </div>
-          </div>
+<div id="myForm1">
+  
+        <form id="myForm" onSubmit={this.handleSubmit} ref="myform">
+          <label>
+            Status:
+            <textarea className="text-area offset-9" ref="text"  value={this.state.value} onChange={this.handleChange}/>
+            <input type="file" className="form-control-file " ref="file" onChange={this.handleFiles} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+        </div>
+        
     
-    )}
- 
-    </ul>
-          
+        {/*
+        <div className="card offset-4" style= {{width:450 , height:150 ,marginLeft:400 }
+      <div class="md-form">
+        <i class="fas fa-pencil-alt prefix grey-text"></i>
+        <textarea id="form107" class="md-textarea form-control" rows="5"></textarea>
+      </div>
+      <div class="col-md-6">
+      <input type="submit" value="Submit" style={{marginLeft:10}}/>
+      </div>
+      </div>
+        */}
+       
          
-         
-           </React.Fragment>
+      <Crud onMe={this.handleMe} items ={this.state.items}  onPost={this.handlePost} onDelete={this.handleDelete} onUpdate={this.forceUpdate}  onText={this.handleText} onSubmit={this.handleSubmit} onFiles={this.handleFiles} file={this.state.file} value={this.state.value} handleShow={this.handleShow} handleClose={this.handleClose} show={this.state.show} handleContent={this.handleContent} handleIndex={this.handleIndex}/>
+    
+     
+     
+      
+</React.Fragment>
         );
       }
     }
