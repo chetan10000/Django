@@ -1,0 +1,26 @@
+body{
+    background: linear-gradient(125deg,#0ee3df,#0e95e3);
+}
+#myApp{
+    
+    width:550px;
+    margin:50px auto;
+}
+
+#myCard{
+    background-color: #0ee3c7;
+
+}
+#myForm1{
+    margin-left:450px;
+    width:400px;
+}
+#myForm1 textarea{
+    width:400px;
+    height:150px;
+    margin-left:0px;
+    border-radius:5px;
+    outline:None;
+}
+
+
