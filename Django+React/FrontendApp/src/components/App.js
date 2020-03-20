@@ -18,10 +18,16 @@ import './App.css';
         items: [],
         value:'',
         file:null,
+<<<<<<< HEAD
         username:'chetan',
         password:'chetan1990',
         show:false,
         index:0,
+=======
+        username:'************',
+        password:'********',
+        show:false,
+>>>>>>> f7796e4955d320e37b29f67241db6de5a0210fc7
         
       };
       this.handlePost= this.handlePost.bind(this);
@@ -30,6 +36,7 @@ import './App.css';
     
     handleClose = ()=>{
       this.setState({show:false});
+<<<<<<< HEAD
   
     }
 
@@ -40,6 +47,12 @@ import './App.css';
       
   }
 
+=======
+  }
+  handleShow = ()=>{
+      this.setState({show:true});
+  }
+>>>>>>> f7796e4955d320e37b29f67241db6de5a0210fc7
   
     componentDidMount() {
       fetch("http://127.0.0.1:8000/api/status/All/")
@@ -137,6 +150,7 @@ import './App.css';
     }
 
 handleFiles  = (event)=>{
+<<<<<<< HEAD
   
   
   //let file = Array.from(files).forEach(file => this.setState({file:file})
@@ -151,6 +165,23 @@ handleIndex = (item,index)=>{
 handleContent = (item,index)=>{
   const item1 = this.state.items.indexOf(item);
   
+=======
+  
+  
+  //let file = Array.from(files).forEach(file => this.setState({file:file})
+ // );
+this.setState({file:event.target.files[0]});
+
+
+}
+handleIndex = (item)=>{
+  
+  console.log(this.state.items.indexOf(item));
+}
+handleContent = (item)=>{
+  const item1 = this.state.items.indexOf(item);
+  
+>>>>>>> f7796e4955d320e37b29f67241db6de5a0210fc7
  
 }
 
@@ -195,7 +226,11 @@ handleText = (event) =>{
         */}
        
          
+<<<<<<< HEAD
       <Crud onMe={this.handleMe} index={this.state.index} items ={this.state.items}  onPost={this.handlePost} onDelete={this.handleDelete} onUpdate={this.forceUpdate}  onText={this.handleText} onSubmit={this.handleSubmit} onFiles={this.handleFiles} file={this.state.file} value={this.state.value} handleShow={this.handleShow} handleClose={this.handleClose} show={this.state.show} handleContent={this.handleContent} handleIndex={this.handleIndex}/>
+=======
+      <Crud onMe={this.handleMe} items ={this.state.items}  onPost={this.handlePost} onDelete={this.handleDelete} onUpdate={this.forceUpdate}  onText={this.handleText} onSubmit={this.handleSubmit} onFiles={this.handleFiles} file={this.state.file} value={this.state.value} handleShow={this.handleShow} handleClose={this.handleClose} show={this.state.show} handleContent={this.handleContent} handleIndex={this.handleIndex}/>
+>>>>>>> f7796e4955d320e37b29f67241db6de5a0210fc7
     
      
      
