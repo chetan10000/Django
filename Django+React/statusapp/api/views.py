@@ -15,7 +15,7 @@ def is_json(json_data):
     except:
         is_valid = False
     return is_valid
-
+'''
 class ListSearchView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.BasicAuthentication]
@@ -66,7 +66,7 @@ class StatusDeleteView(DestroyAPIView):
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
     lookup_field = 'id'
-
+'''
 class StatusAllInOne(mixins.CreateModelMixin,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin,ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.BasicAuthentication]
