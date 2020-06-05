@@ -1,0 +1,74 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+<div class="container">
+  
+      <form class="form-horizontal" action="/assistants" method="POST" enctype="multipart/form-data"  >
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Name:</label>
+          <div class="col-sm-6">
+            <input type="name" class="form-control" id="name" placeholder="please enter name" name="name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="inputImage">Image:</label>
+          <div class="col-sm-6">          
+<input type="file"  name="inputImage"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2">Job:</label>
+          <div class="col-sm-6">
+          <select name="job" class="form-control show-tick">
+              {% for job in jobs %}
+              {% if job.title %}
+       <option>{{job.normalized_job_title}}</option>
+        {% endif %}
+          {% endfor %}
+          </select>
+        </div>
+        </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
+  </div>
+
+{#
+   <form >
+<input type="text" name="name" id="name"/>
+
+            <select class="form-control show-tick">
+            {% for job in jobs %}
+            {% if job.title %}
+     <option>{{job.title}}</option>
+     
+   {% endif %}
+        {% endfor %}
+    </select>
+    <input type="file" class="form-control-file" id="image">
+  </form>
+  
+  
+#}       
+
+
+{#
+<select class="selectpicker">
+        {% for job in jobs %}
+        {% if job.title %}
+        
+        <option>{{job.title}}</option>
+        
+        {% endif %}
+        {% endfor %}
+</select>#}
+
+{% endblock %}
+{% block scripts %}
+{{super()}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+{% endblock %}
