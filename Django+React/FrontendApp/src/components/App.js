@@ -307,6 +307,45 @@ fetch("http://127.0.0.1:8000/api/status/add/",
   handleFreiendRequests=()=>{
     
   }
+  handleCancelRequest = (id)=>{
+    var cookies = new Cookies();
+    var csrftoken = cookies.get('csrftoken');
+    var id=id;
+    fetch("http://127.0.0.1:8000/api/status/cancel/",{
+      method:'POST',
+      mode:'cors',
+      headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},
+      credentials:"include",
+      body:JSON.stringify({'id':id,'username':this.state.username,'password':this.state.password})
+    }).then(res=>res.json()).then(result=>{
+      this.setState({send_requests:result});
+    })
+    .catch(e=>{
+      console.log(e);
+    })
+
+  }
+  handleRemoveFreind = (id)=>{
+    console.log(id)
+var cookies = new Cookies();
+var csrftoken = cookies.get('csrftoken');
+var id=id;
+fetch ("http://127.0.0.1:8000/api/status/remove/",{
+  method:'POST',
+  mode:'cors',
+
+  headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},
+    credentials:'include',
+  body:JSON.stringify({'id':id,'username':this.state.username ,'password':this.state.password})
+
+}).then(res=>res.json()) .then(result=>{
+  console.log(result)
+})
+.catch(e=>{
+  console.log(e)
+})
+}
+  
   render() {
   
     const { error, isLoaded, items } = this.state;
@@ -318,61 +357,97 @@ fetch("http://127.0.0.1:8000/api/status/add/",
     } else {
       return (
         <React.Fragment >
-        <Navbar >
-            <button className="btn btn-info" onClick={this.handleUsers} style={{marginRight:10}}>Users</button>
-            <button type="button"  className="btn btn-primary"  style={{marginRight:10}}  data-toggle="collapse" data-target="#collapsebutton"  onClick={()=>this.handleFreiendRequests} >
+  Navbar >
+            <button type="button"  className="btn btn-primary"   id="users" style={{marginLeft:10}} >
+             Users
+             </button>
+             <button type="button"  className="btn btn-primary"   id="send_requests" style={{marginLeft:10}} >
              send requests<span className="badge badge-light"> {this.state.send_requests.length}</span>
              </button>
-             <button type="button"  className="btn btn-primary"  data-toggle="collapse" data-target="#collapsebutton1" >
+             <button type="button"  className="btn btn-primary"   id="get_requests" style={{marginLeft:10}} >
              get requests<span className="badge badge-light"> {this.state.get_requests.length}</span>
              </button>
-            </Navbar>
-             <div className="list-group"><ul style={{marginLeft:10 }}>{this.state.Users.map((user,index)=>
-             <div className="card mb-3 offset-4"  style={{marginLeft:20 , width:200 }}>
-          
-             <div class="row no-gutters"  >
-          
-   
-          
-          <p className="card-text text-primary font-weight-bold mb-2"  style={{marginRight:5}} st >{user}</p>
-       
-            {/*<p className="card-text mb-2">{item.id}<small className="text-muted">Last updated 3 mins ago</small></p>*/}
-            <button onClick={()=>this.handleAddFriend(index)} data-toggle="button" className="btn btn-light">add</button>
-       
-    
-      
-    
-             </div>
-             
-             </div>
+             <button type="button"  className="btn btn-primary"   id="friends" style={{marginLeft:10}} >
+             Friends<span className="badge badge-light"> {this.state.friends.length}</span>
+             </button>
             
-             )}</ul></div>
-             
-             
-             <div className="list-group"><ul style={{marginLeft:10 }}>{this.state.send_requests.map((user,index)=>
-             <div className="card mb-3 offset-4"  style={{marginLeft:20 , width:200 }}>
-          
-             <div class="row no-gutters"  >
-          
-   
-          
-          <p className="card-text text-primary font-weight-bold mb-2"  style={{marginRight:5}} st >{user}</p>
-       
-            {/*<p className="card-text mb-2">{item.id}<small className="text-muted">Last updated 3 mins ago</small></p>*/}
-            <button data-toggle="button" className="btn btn-light">cancel</button>
-       
-    
       
-    
-             </div>
-             
-             </div>
-            
-             )}</ul></div>
-               
-             {this.state.get_requests.map(user=>{
-               <li>{user.fields.username}</li>
-             })}
+  </Navbar>
+  <div>
+<UncontrolledCollapse toggler="#friends">
+<div className="list-group"><ul style={{marginLeft:330 }}>{this.state.friends.map((friend,index)=>
+  <Card style={{width:300}}>
+  <CardBody>
+{
+<p>
+{friend.fields.username}
+<button onClick={()=>this.handleRemoveFreind(friend.pk)}  className="btn btn-danger" style={{marginLeft:10}}>Remove</button>
+</p>
+
+}
+</CardBody>
+</Card>)}
+</ul>
+</div>
+</UncontrolledCollapse>
+</div>
+<div>
+<UncontrolledCollapse toggler="#users">
+<div className="list-group"><ul style={{marginLeft:10 }}>{this.state.Users.map((user,index)=>
+  <Card style={{width:300}}>
+  <CardBody>
+{
+<p>
+{user}
+<button onClick={()=>this.handleAddFriend(index)} data-toggle="button" className="btn btn-primary" style={{marginLeft:10}}>add</button>
+</p>
+
+}
+</CardBody>
+</Card>)}
+</ul>
+</div>
+</UncontrolledCollapse>
+</div>
+<div>
+<UncontrolledCollapse toggler="#send_requests">
+<div className="list-group"><ul style={{marginLeft:330 }}>{this.state.send_requests.map((user,index)=>
+  <Card style={{width:300}}>
+  <CardBody>
+{
+
+<p className="card-text text-primary font-weight-bold mb-2"  style={{marginRight:5,marginTop:10}} >{user.fields.username}
+<button data-toggle="button" className="btn btn-primary" style={{margin:5}}  onClick={()=>{this.handleCancelRequest(user.pk)}} >cancel FreidnRequest</button>
+
+</p>
+
+}
+</CardBody>
+</Card>)}
+</ul>
+</div>
+</UncontrolledCollapse>
+</div>
+<div>
+<UncontrolledCollapse toggler="#get_requests">
+<div className="list-group"><ul style={{marginLeft:330 }}>{this.state.get_requests.map((user,index)=>
+  <Card style={{width:300}}>
+  <CardBody>
+{
+
+<p className="card-text text-primary font-weight-bold mb-2"  style={{marginRight:5,marginTop:10}} >{user.fields.username}
+<button data-toggle="button" className="btn btn-primary" style={{margin:5}}  onClick={()=>this.handleAcceptRequest(user.pk)} >accept</button>
+<button data-toggle="button" className="btn btn-danger" style={{margin:5}} onClick={()=>this.handleRejectRequest(user.pk)}>reject</button>
+       
+</p>
+
+}
+</CardBody>
+</Card>)}
+</ul>
+</div>
+</UncontrolledCollapse>
+</div>
              {/*<div><video ref={this.localVideo}></video></div>*/}
           
           <div id="myForm1">

@@ -265,6 +265,46 @@ class RejectRequest(View):
             friends_json = serialize('json',Friends)
             return HttpResponse(friends_json,content_type='application-json')
 
+            
+class CancelRequest(View):
+    def post(self,request,*args,**kwargs):
+        json_loads = json.loads(request.body)
+        username =json_loads.get('username')
+        password = json_loads.get('password')
+        json_id=int( json_loads.get('id'))
+        from_user= User.objects.get(pk=json_id)
+    
+        #print(request.body)
+        user = authenticate(username=username,password=password)
+        if user:
+            #friendship_requests = [ x for x in FriendshipRequest.objects.filter(to_user=user) if x.from_user==u]
+            friendship_request = FriendshipRequest.objects.get(from_user=user,to_user=json_id) 
+            friendship_request.cancel()
+            Friends = Friend.objects.sent_requests(user=user)
+            friends_json = serialize('json',Friends)
+            return HttpResponse(friends_json,content_type='application-json')
+
+
+
+class RemoveFriend(View):
+    def post(self,request,*args,**kwargs):
+        json_loads = json.loads(request.body)
+        username =json_loads.get('username')
+        password = json_loads.get('password')
+        json_id=int( json_loads.get('id'))
+        from_user= User.objects.get(pk=json_id)
+    
+        #print(request.body)
+        user = authenticate(username=username,password=password)
+        if user:
+            #friendship_requests = [ x for x in FriendshipRequest.objects.filter(to_user=user) if x.from_user==u]
+            delete_friend = Friend.objects.remove_friend(to_user=user,from_user=from_user)
+            Friends = Friend.objects.friends(user=user)
+            friends_json = serialize('json',Friends)
+            return HttpResponse(friends_json,content_type='application-json')
+
+
+
 
 
 
