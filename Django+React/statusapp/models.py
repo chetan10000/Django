@@ -34,3 +34,12 @@ class Status(models.Model):
     def serialize(self):
         return serilize('json' , [self])
     '''
+    
+
+class Profile(models.Model):
+    user  =     models.OneToOneField(User,on_delete=models.CASCADE,default=1)
+    image =   models.ImageField(upload_to=upload_status_App,null=True,blank=True)
+
+    class Meta:
+        verbose_name = "Profile"
+        verbose_name_plural = "Profiles"

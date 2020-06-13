@@ -303,7 +303,22 @@ class RemoveFriend(View):
             friends_json = serialize('json',Friends)
             return HttpResponse(friends_json,content_type='application-json')
 
-
+class ProfileView(APIView):
+    authentication_classes = [authentication.BasicAuthentication]
+    permission_classes = [permissions.isAuthenticated]
+    def get(self,request,format=None):
+        bj = [ [u.user.username,u.user.first_name,u.user.last_name,u.image.url,u.user.email] for u in Profile.objects.all() if u.user.username == 'user0000']
+        for x in obj:
+            
+            data = json.dumps({
+                'username':x[0],
+                'first_name':x[1],
+                'last_name':x[2],
+                'image':str(x[3]),
+                'email':x[4],
+            })
+        return JsonResponse(data,safe=False)
+        
 
 
 

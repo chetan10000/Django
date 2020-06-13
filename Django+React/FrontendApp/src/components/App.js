@@ -7,7 +7,7 @@ import './App.css';
 import { FaBeer } from 'react-icons/fa';
 import { Navbar, NavItem } from "react-bootstrap";
 import Cookies from 'universal-cookie';
-
+import UserProfile from './UserProfile';
 
 
 class App extends Component {
@@ -28,6 +28,7 @@ class App extends Component {
       send_requests:[],
       get_requests:[],
       already_send:false,
+	  profile:[],
       
 
     };
@@ -357,7 +358,7 @@ fetch ("http://127.0.0.1:8000/api/status/remove/",{
     } else {
       return (
         <React.Fragment >
-  Navbar >
+  <Navbar >
             <button type="button"  className="btn btn-primary"   id="users" style={{marginLeft:10}} >
              Users
              </button>
@@ -447,6 +448,7 @@ fetch ("http://127.0.0.1:8000/api/status/remove/",{
 </ul>
 </div>
 </UncontrolledCollapse>
+<UserProfile profile={this.state.profile}/>
 </div>
              {/*<div><video ref={this.localVideo}></video></div>*/}
           
